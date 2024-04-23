@@ -1,0 +1,82 @@
+services:
+  # Gateway service
+  gateway:
+    image: node:20.4.0
+    container_name: leaguehub-gateway
+    restart: unless-stopped
+    command: npm run start:dev
+    working_dir: /app
+    networks:
+      - leaguehub-network
+    ports:
+      - 3000:3000
+    volumes:
+      - ./gateway-service:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Auth service
+  auth:
+    image: node:20.4.0
+    container_name: leaguehub-auth
+    restart: unless-stopped
+    command: npm run start:dev
+    working_dir: /app
+    networks:
+      - leaguehub-network
+    ports:
+      - 3001:3000
+    volumes:
+      - ./auth-service:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # User service
+  user:
+    image: node:20.4.0
+    container_name: leaguehub-user
+    restart: unless-stopped
+    command: npm run start:dev
+    working_dir: /app
+    networks:
+      - leaguehub-network
+    ports:
+      - 3002:3000
+    volumes:
+      - ./user-service:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Database service
+  db:
+    image: mysql:8.3.0
+    container_name: leaguehub-user-db
+    restart: unless-stopped
+    networks:
+      - leaguehub-network
+    ports:
+      - ${MYSQL_PORT}:3306
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
+    volumes:
+      - db-volume:/var/lib/mysql
+      - ./:/docker-entrypoint-initdb.d:ro
+
+networks:
+  leaguehub-network:
+    driver: bridge
+
+volumes:
+  db-volume: # Persist data for the database
