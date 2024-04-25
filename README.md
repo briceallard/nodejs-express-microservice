@@ -22,25 +22,25 @@ Welcome to our Microservice Template repository! This template provides a robust
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   git clone git@github.com:briceallard/nodejs-express-microservice.git
    ```
 
 2. **Install Dependencies**:
 
    ```bash
-   cd your-repository
+   cd nodejs-express-microservice
    npm install
    ```
 
 3. **Set Up Environment Variables**:
 
-   - Create a `.env` file in the root directory based on the provided `.env.example`.
+   - Create a `.env` file in the root directory based on the provided `.env-example`.
    - Update the environment variables with your MySQL database configuration.
 
 4. **Run the Services**:
 
    ```bash
-   npm run start:dev
+   docker compose up
    ```
 
 5. **Access the Services**:
@@ -50,28 +50,33 @@ Welcome to our Microservice Template repository! This template provides a robust
 ## 📂 Project Structure
 
 ```
-your-repository/
-├── 📁 src/
-│   ├── 📁 proxy/                  # Proxy gateway service
-│   │   ├── 📁 controllers/        # Proxy controller logic
-│   │   ├── 📁 routes/             # Proxy route definitions
-│   │   └── 📄 index.ts            # Entry point for proxy service
-│   ├── 📁 services/
-│   │   ├── 📁 service1/           # Example service 1
-│   │   │   ├── 📁 controllers/    # Service 1 controller logic
-│   │   │   ├── 📁 routes/         # Service 1 route definitions
-│   │   │   └── 📄 index.ts        # Entry point for service 1
-│   │   ├── 📁 service2/           # Example service 2
-│   │   │   ├── 📁 controllers/    # Service 2 controller logic
-│   │   │   ├── 📁 routes/         # Service 2 route definitions
-│   │   │   └── 📄 index.ts        # Entry point for service 2
-│   │   └── ...
-│   ├── 📁 utils/                  # Utility functions
-│   └── 📄 index.ts                # Main entry point of the application
-├── 📄 .dockerignore               # Files to be ignored in Docker build
-├── 📄 Dockerfile                  # Docker configuration
-├── 📄 .env.example                # Example environment variables
-└── 📄 README.md                   # You are here
+nodejs-express-microservice/
+├── 📁 gateway-service/        # Proxy gateway service
+│   ├── 📁 app/                # Proxy controller logic
+│   |   └── 📄 server.ts       # Entry point for proxy service
+│   ├── 📁 config/             # Configuration files
+│   |   └── 📄 db.config.ts    # Database configuration
+│   |   └── 📄 index.ts        # Default exports
+├── 📁 auth-service/           # Auth service
+│   ├── 📁 app/                # Auth logic (controllers, routes, etc.)
+│   |   └── 📄 server.ts       # Entry point for auth service
+│   ├── 📁 config/             # Configuration files
+│   |   └── 📄 db.config.ts    # Database configuration
+│   |   └── 📄 index.ts        # Default exports
+├── 📁 user-service/           # User service
+│   ├── 📁 app/                # User logic (controllers, routes, etc.)
+│   |   └── 📄 server.ts       # Entry point for user service
+│   ├── 📁 config/             # Configuration files
+│   |   └── 📄 db.config.ts    # Database configuration
+│   |   └── 📄 index.ts        # Default exports
+│   └── ...
+├── 📁 utils/                  # Utility functions
+|── 📄 init.sh                 # A shell script to update all services
+|── 📄 schema.sql              # MySQL Schema file for docker volume
+├── 📄 .dockerignore           # Files to be ignored in Docker build
+├── 📄 docker-compose.yml      # Docker configuration
+├── 📄 .env.example            # Example environment variables
+└── 📄 README.md               # You are here
 ```
 
 ## 🤝 Contributing
