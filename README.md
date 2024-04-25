@@ -70,7 +70,6 @@ nodejs-express-microservice/
 │   |   └── 📄 db.config.ts    # Database configuration
 │   |   └── 📄 index.ts        # Default exports
 │   └── ...
-├── 📁 utils/                  # Utility functions
 |── 📄 init.sh                 # A shell script to update all services
 |── 📄 schema.sql              # MySQL Schema file for docker volume
 ├── 📄 .dockerignore           # Files to be ignored in Docker build
