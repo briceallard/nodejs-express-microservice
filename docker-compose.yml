@@ -2,12 +2,12 @@ services:
   # Gateway service
   gateway:
     image: node:20.4.0
-    container_name: leaguehub-gateway
+    container_name: example-gateway
     restart: unless-stopped
     command: npm run start:dev
     working_dir: /app
     networks:
-      - leaguehub-network
+      - example-network
     ports:
       - 3000:3000
     volumes:
@@ -19,12 +19,12 @@ services:
   # Auth service
   auth:
     image: node:20.4.0
-    container_name: leaguehub-auth
+    container_name: example-auth
     restart: unless-stopped
     command: npm run start:dev
     working_dir: /app
     networks:
-      - leaguehub-network
+      - example-network
     ports:
       - 3001:3000
     volumes:
@@ -36,12 +36,12 @@ services:
   # User service
   user:
     image: node:20.4.0
-    container_name: leaguehub-user
+    container_name: example-user
     restart: unless-stopped
     command: npm run start:dev
     working_dir: /app
     networks:
-      - leaguehub-network
+      - example-network
     ports:
       - 3002:3000
     volumes:
@@ -53,10 +53,10 @@ services:
   # Database service
   db:
     image: mysql:8.3.0
-    container_name: leaguehub-user-db
+    container_name: example-user-db
     restart: unless-stopped
     networks:
-      - leaguehub-network
+      - example-network
     ports:
       - ${MYSQL_PORT}:3306
     environment:
@@ -75,7 +75,7 @@ services:
       - ./:/docker-entrypoint-initdb.d:ro
 
 networks:
-  leaguehub-network:
+  example-network:
     driver: bridge
 
 volumes:
